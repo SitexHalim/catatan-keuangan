@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "891895577844",
+    "project_id": "fir-project-f9f3b",
+    "storage_bucket": "fir-project-f9f3b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:891895577844:android:2eebfde9eb3e1bcd0db2a1",
+        "android_client_info": {
+          "package_name": "com.example.catatan_keuangan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEFxErYaEScvvffVEHKHU2YoaYr6B1hcg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
