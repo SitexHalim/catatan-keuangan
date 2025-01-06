@@ -152,7 +152,6 @@ class ControllerTransaksi extends GetxController {
 
   RxList<Map<String, dynamic>> monthlySummary = <Map<String, dynamic>>[].obs;
 
-  // Fungsi untuk mendapatkan jurnal keuangan bulanan
   List<Map<String, dynamic>> getMonthJurnal() {
     List<Map<String, dynamic>> summary = [];
 
@@ -171,9 +170,8 @@ class ControllerTransaksi extends GetxController {
     return summary;
   }
 
-  // Fungsi untuk memperbarui jurnal bulanan
-  void updateMonthlyFinancialSummary() {
+  void UpdateMonthJurnal() {
     List<Map<String, dynamic>> summary = getMonthJurnal();
-    monthlySummary.assignAll(summary); // Update state
+    monthlySummary.assignAll(summary);
   }
 }

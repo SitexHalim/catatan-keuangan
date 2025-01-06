@@ -65,7 +65,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: const Icon(Icons.refresh_outlined)),
           ElevatedButton(
               onPressed: () {
-                controller.updateMonthlyFinancialSummary();
+                controller.UpdateMonthJurnal();
               },
               child: const Icon(Icons.calendar_today))
         ],
