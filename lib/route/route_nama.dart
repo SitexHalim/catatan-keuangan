@@ -10,5 +10,4 @@ abstract class RouteNama {
   static const profile = '/profilescreen';
   static const profiles = '/profilesscreen';
   static const grafik = '/grafikscreen';
-  static const grafikperbadingan = '/grafikperbandinganscreen';
 }

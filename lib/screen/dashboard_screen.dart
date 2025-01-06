@@ -114,7 +114,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     subtitle: Text(formattedBalance),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 const Text(
                   'Jurnal Bulanan',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
