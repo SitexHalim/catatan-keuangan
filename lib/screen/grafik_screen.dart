@@ -155,7 +155,8 @@ class _GrafikscreenState extends State<GrafikScreen> {
                               if (value == 0) {
                                 return const Text('0');
                               } else if (value % 50 == 0) {
-                                return Text(value.toString());
+                                return Text(
+                                    '${(value / 1000).toStringAsFixed(1)}K');
                               }
                               return Container();
                             },
@@ -221,7 +222,7 @@ class _GrafikscreenState extends State<GrafikScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 25),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

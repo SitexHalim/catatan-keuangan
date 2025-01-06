@@ -20,7 +20,7 @@ class _OutcomescreenState extends State<OutcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Center(child: const Text('Transaksi Pengeluaran'))),
+      appBar: AppBar(title: const Center(child: Text('Transaksi Pengeluaran'))),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
