@@ -55,7 +55,7 @@ class _GrafikscreenState extends State<GrafikScreen> {
         value: entry.value,
         color: _getCategoryColor(entry.key),
         title:
-            '${_getCategoryName(entry.key)}\n${percentage.toStringAsFixed(1)}%', // Menambahkan persentase
+            '${_getCategoryName(entry.key)}\n${percentage.toStringAsFixed(1)}%',
         radius: 50,
         titleStyle: const TextStyle(
             fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
@@ -80,7 +80,7 @@ class _GrafikscreenState extends State<GrafikScreen> {
         value: entry.value,
         color: _getCategoryColor(entry.key),
         title:
-            '${_getCategoryName(entry.key)}\n${percentage.toStringAsFixed(1)}%', // Menambahkan persentase
+            '${_getCategoryName(entry.key)}\n${percentage.toStringAsFixed(1)}%',
         radius: 50,
         titleStyle: const TextStyle(
             fontSize: 11, fontWeight: FontWeight.bold, color: Colors.white),
@@ -114,6 +114,20 @@ class _GrafikscreenState extends State<GrafikScreen> {
     }
   }
 
+  Widget _buildLegend(Color color, String label) {
+    return Row(
+      children: [
+        Container(
+          width: 20,
+          height: 20,
+          color: color,
+        ),
+        const SizedBox(width: 8),
+        Text(label),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,12 +135,100 @@ class _GrafikscreenState extends State<GrafikScreen> {
         title: const Center(child: Text('Grafik')),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
+        padding: const EdgeInsets.all(8.0),
+        child: Obx(() {
+          List<double> incomeByMonth = controller.getIncomeByMonth();
+          List<double> outcomeByMonth = controller.getOutcomeByMonth();
+
+          return Column(
             children: [
-              const Text('Pemasukan dan Pengeluaran Berdasarkan Kategori',
-                  style: TextStyle(fontSize: 15)),
+              AspectRatio(
+                aspectRatio: 1.2,
+                child: BarChart(
+                  BarChartData(
+                    gridData: const FlGridData(show: true),
+                    titlesData: FlTitlesData(
+                        leftTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            getTitlesWidget: (value, MetaData) {
+                              if (value == 0) {
+                                return const Text('0');
+                              } else if (value % 50 == 0) {
+                                return Text(value.toString());
+                              }
+                              return Container();
+                            },
+                            reservedSize: 32,
+                          ),
+                        ),
+                        bottomTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            getTitlesWidget: (value, MetaData) {
+                              switch (value.toInt()) {
+                                case 1:
+                                  return const Text('Jan');
+                                case 2:
+                                  return const Text('Feb');
+                                case 3:
+                                  return const Text('Mar');
+                                case 4:
+                                  return const Text('Apr');
+                                case 5:
+                                  return const Text('May');
+                                case 6:
+                                  return const Text('Jun');
+                                case 7:
+                                  return const Text('Jul');
+                                case 8:
+                                  return const Text('Aug');
+                                case 9:
+                                  return const Text('Sep');
+                                case 10:
+                                  return const Text('Oct');
+                                case 11:
+                                  return const Text('Nov');
+                                case 12:
+                                  return const Text('Dec');
+                                default:
+                                  return Container();
+                              }
+                            },
+                            reservedSize: 32,
+                          ),
+                        )),
+                    borderData: FlBorderData(show: true),
+                    barGroups: List.generate(12, (index) {
+                      return BarChartGroupData(
+                        x: index + 1,
+                        barRods: [
+                          BarChartRodData(
+                            fromY: 0,
+                            toY: incomeByMonth[index],
+                            color: Colors.green,
+                            width: 10,
+                          ),
+                          BarChartRodData(
+                            fromY: 0,
+                            toY: outcomeByMonth[index],
+                            color: Colors.red,
+                            width: 10,
+                          ),
+                        ],
+                      );
+                    }),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildLegend(Colors.green, 'Pemasukan'),
+                  _buildLegend(Colors.red, 'Pengeluaran'),
+                ],
+              ),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -172,8 +274,8 @@ class _GrafikscreenState extends State<GrafikScreen> {
                 ],
               ),
             ],
-          ),
-        ),
+          );
+        }),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,

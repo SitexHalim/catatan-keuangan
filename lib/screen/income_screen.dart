@@ -21,7 +21,6 @@ class _TransaksiincomeScreenState extends State<IncomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.amber[300],
       appBar: AppBar(title: const Center(child: Text('Transaksi Pemasukan'))),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

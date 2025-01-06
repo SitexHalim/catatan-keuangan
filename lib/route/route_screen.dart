@@ -25,7 +25,7 @@ class RouteScreen {
     GetPage(name: RouteNama.profiles, page: () => const ProfilesScreen()),
     GetPage(name: RouteNama.grafik, page: () => const GrafikScreen()),
     // GetPage(
-    // name: RouteNama.grafikperbadingan,
-    // page: () => const GrafikperbandinganScreen())
+    //     name: RouteNama.grafikperbadingan,
+    //     page: () => const GrafikperbandinganScreen())
   ];
 }

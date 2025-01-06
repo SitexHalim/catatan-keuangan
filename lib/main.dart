@@ -31,7 +31,7 @@ class Apps extends StatelessWidget {
         darkTheme: ThemeData.dark(),
         theme: ThemeData.light(),
         debugShowCheckedModeBanner: false,
-        home: RegisterScreen(),
+        home: DashboardScreen(),
         getPages: RouteScreen.Page,
       );
     });

@@ -42,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           InkWell(
             onTap: () {
-              Get.toNamed(RouteNama.profiles);
+              Get.toNamed(RouteNama.grafikperbadingan);
             },
             child: const Card(
               margin: EdgeInsets.all(10.0),
