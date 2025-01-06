@@ -16,6 +16,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final controll = Get.put(ControllerProfile());
   int _selectedIndex = 0;
 
+  final List<String> monthNames = [
+    'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember'
+  ];
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -47,7 +62,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
               onPressed: () {
                 controller.resetdata();
               },
-              child: const Icon(Icons.refresh_outlined))
+              child: const Icon(Icons.refresh_outlined)),
+          ElevatedButton(
+              onPressed: () {
+                controller.updateMonthlyFinancialSummary();
+              },
+              child: const Icon(Icons.calendar_today))
         ],
       ),
       body: Padding(
@@ -94,6 +114,47 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     subtitle: Text(formattedBalance),
                   ),
                 ),
+                SizedBox(height: 10),
+                const Text(
+                  'Jurnal Bulanan',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: controller.monthlySummary.length,
+                    itemBuilder: (context, index) {
+                      var entry = controller.monthlySummary[index];
+                      double totalIncome = entry['totalIncome'];
+                      double totalOutcome = entry['totalOutcome'];
+
+                      int currentMonth = DateTime.now().month;
+                      int entryMonth = index + 1;
+
+                      if (entryMonth > currentMonth) {
+                        return const SizedBox.shrink();
+                      }
+
+                      return Card(
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        child: ListTile(
+                          title: Text('Bulan: ${monthNames[index]}'),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                  'Total Pemasukan: ${controll.formatCurrency(totalIncome, controll.currency.value)}'),
+                              Text(
+                                  'Total Pengeluaran: ${controll.formatCurrency(totalOutcome, controll.currency.value)}'),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                )
               ],
             );
           })),

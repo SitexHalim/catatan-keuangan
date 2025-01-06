@@ -149,4 +149,31 @@ class ControllerTransaksi extends GetxController {
 
     return outcomePerMonth;
   }
+
+  RxList<Map<String, dynamic>> monthlySummary = <Map<String, dynamic>>[].obs;
+
+  // Fungsi untuk mendapatkan jurnal keuangan bulanan
+  List<Map<String, dynamic>> getMonthJurnal() {
+    List<Map<String, dynamic>> summary = [];
+
+    for (int month = 1; month <= 12; month++) {
+      double totalIncome = getIncomeByMonth()[month - 1];
+      double totalOutcome = getOutcomeByMonth()[month - 1];
+
+      summary.add({
+        'month': month,
+        'totalIncome': totalIncome,
+        'totalOutcome': totalOutcome,
+        'balance': totalIncome - totalOutcome,
+      });
+    }
+
+    return summary;
+  }
+
+  // Fungsi untuk memperbarui jurnal bulanan
+  void updateMonthlyFinancialSummary() {
+    List<Map<String, dynamic>> summary = getMonthJurnal();
+    monthlySummary.assignAll(summary); // Update state
+  }
 }
