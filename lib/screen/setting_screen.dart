@@ -116,7 +116,7 @@ class _SettingsScreenState extends State<Settingscreen> {
                       print('Berhasil menyimpan data ke sharedprefenced');
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey,
+                        backgroundColor: Colors.lightGreen,
                         foregroundColor: Colors.white),
                     child: const Text('Simpan Batas Pengeluaran'),
                   ),

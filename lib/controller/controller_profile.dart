@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ControllerProfile extends GetxController {
   TextEditingController expenseController = TextEditingController();
@@ -30,7 +31,6 @@ class ControllerProfile extends GetxController {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
-  // Menampilkan notifikasi
   Future<void> _showNotification(String title, String body) async {
     print("Notifikasi akan muncul dengan title: $title");
     const androidDetails = AndroidNotificationDetails(
@@ -53,6 +53,8 @@ class ControllerProfile extends GetxController {
     prefs.setDouble('maxExpense', expense);
     maxExpense.value = expense;
     checkExpenses(ControllerTransaksi().totalOutcome);
+    Get.defaultDialog(
+        title: 'Sukses', middleText: 'Batas Pengeluaran di simpan');
   }
 
   void checkExpenses(double currentExpense) {
@@ -88,7 +90,17 @@ class ControllerProfile extends GetxController {
     update();
   }
 
-  // Save profile photo
+  Future<void> pickProfilePhoto() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? pickedFile = await _picker.pickImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      await saveProfilePhoto(pickedFile.path);
+    }
+  }
+
   Future<void> saveProfilePhoto(String newProfilePhoto) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('profilePhoto', newProfilePhoto);

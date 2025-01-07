@@ -11,6 +11,8 @@ class ControllerUser extends GetxController {
   TextEditingController passwordcontrol = TextEditingController();
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  var userEmail = ''.obs;
+  var userNama = ''.obs;
   var isloading = false.obs;
 
   void clear() {
@@ -96,7 +98,7 @@ class ControllerUser extends GetxController {
       final credential = GoogleAuthProvider.credential(
           idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
       Get.snackbar('Berhasil', 'Log In ke akun');
-      Get.offNamed(RouteNama.dashboard);
+      Get.offAllNamed(RouteNama.dashboard);
 
       return await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (e) {
@@ -114,6 +116,46 @@ class ControllerUser extends GetxController {
       return true;
     } on Exception catch (_) {
       return false;
+    } finally {
+      isloading.value = false;
+    }
+  }
+
+  void loaddata() {
+    loadDataUser();
+  }
+
+  Future<void> loadDataUser() async {
+    User? user = auth.currentUser;
+    if (user != null) {
+      userEmail.value = user.email ?? 'email tidak di temukan';
+
+      DocumentSnapshot userDoc =
+          await firestore.collection('users').doc(user.uid).get();
+
+      if (userDoc.exists) {
+        userNama.value = userDoc['nama'] ?? 'Nama tidak ditemuka';
+      }
+    }
+  }
+
+  Future<void> updateUserNama(String newNama) async {
+    isloading.value = true;
+    try {
+      User? user = auth.currentUser;
+      if (user != null) {
+        await firestore.collection('users').doc(user.uid).update({
+          'nama': newNama,
+        });
+
+        userNama.value = newNama;
+        Get.defaultDialog(
+            title: 'Sukses', middleText: 'Nama berhasil diperbarui');
+        clear();
+      }
+    } catch (e) {
+      Get.defaultDialog(title: 'Gagal', middleText: 'Gagal memperbarui nama');
+      print('Error update nama: $e');
     } finally {
       isloading.value = false;
     }

@@ -45,6 +45,7 @@ dependencies:
   fl_chart: ^0.69.2
   intl: ^0.20.1
   flutter_local_notifications: ^18.0.1
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:
